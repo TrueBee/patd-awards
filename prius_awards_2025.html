@@ -5,13 +5,11 @@
   <title>2025 Prius and the Dragon Awards</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
       background-color: transparent;
       color: #fff;
       font-family: 'Roboto', sans-serif;
-      overflow-x: hidden;
     }
     a {
       color: #ccc;
@@ -22,14 +20,21 @@
     }
     .gallery-wrapper {
       position: relative;
-      overflow: hidden;
-      padding-bottom: 10px;
+    }
+    .fade-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 100%;
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.4), transparent);
+      pointer-events: none;
+      z-index: 5;
     }
     .gallery-container {
       overflow-x: auto;
       white-space: nowrap;
       padding: 20px;
-      padding-bottom: 0;
       background-color: transparent;
       scrollbar-color: #666 #222;
       scrollbar-width: thin;
@@ -47,20 +52,13 @@
     .award-card {
       display: inline-block;
       position: relative;
-      margin-right: 16px;
-      width: 85vw;
-      max-width: 400px;
-      height: 280px;
+      margin-right: 20px;
+      width: 360px;
+      height: 300px;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 0 12px rgba(0,0,0,0.7);
       background-color: #000;
-      vertical-align: top;
-    }
-    .award-card a.image-link {
-      display: block;
-      width: 100%;
-      height: 100%;
     }
     .award-card img {
       width: 100%;
@@ -75,82 +73,104 @@
       width: 100%;
       background: rgba(0, 0, 0, 0.75);
       color: white;
-      padding: 14px 12px;
+      padding: 10px 12px 30px 12px;
       box-sizing: border-box;
       font-size: 16px;
-      font-weight: bold;
       z-index: 10;
-      line-height: 1.4em;
     }
-    .fade-right::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 50px;
-      height: 100%;
-      background: linear-gradient(to right, transparent, #111);
-      pointer-events: none;
+    .overlay-text span {
+      display: block;
+      font-weight: bold;
+    }
+    .name-line {
+      font-size: 14px;
+      font-weight: normal;
+      margin-top: 4px;
     }
   </style>
 </head>
 <body>
-  <div class="gallery-wrapper fade-right">
+  <div class="gallery-wrapper">
     <div class="gallery-container">
       <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" class="image-link" target="_blank">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" target="_blank">
           <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" alt="Cool Prius">
         </a>
-        <div class="overlay-text">Cool Prius / Best Camping Prius – <a href="https://www.instagram.com/prirunnerryan" target="_blank">@prirunnerryan</a></div>
+        <div class="overlay-text">
+          <span>Cool Prius / Best Camping Prius</span>
+          <div class="name-line"><a href="https://www.instagram.com/prirunnerryan" target="_blank">@prirunnerryan</a></div>
+        </div>
       </div><div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" alt="Best Street Prius">
     </a>
-    <div class="overlay-text">Best Street Prius – <a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
+    <div class="overlay-text">
+      <span>Best Street Prius</span>
+      <div class="name-line"><a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" alt="Best Off-Road Prius + Bumper Sticker">
     </a>
-    <div class="overlay-text">Best Off-Road Prius + Funniest Bumper Sticker – <a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
+    <div class="overlay-text">
+      <span>Best Off-Road Prius + Funniest Bumper Sticker</span>
+      <div class="name-line"><a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" alt="Longest Owned">
     </a>
-    <div class="overlay-text">Longest Owned – <a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a><br>12 years</div>
+    <div class="overlay-text">
+      <span>Longest Owned</span>
+      <div class="name-line"><a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a> – 12 years</div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" alt="Farthest Traveled">
     </a>
-    <div class="overlay-text">Farthest Traveled – <a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a><br>3,465 miles from California</div>
+    <div class="overlay-text">
+      <span>Farthest Traveled</span>
+      <div class="name-line"><a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a> – 3,465 miles from California</div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" alt="Lowest Mileage">
     </a>
-    <div class="overlay-text">Lowest Mileage – <a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a><br>60,000 miles</div>
+    <div class="overlay-text">
+      <span>Lowest Mileage</span>
+      <div class="name-line"><a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a> – 60,000 miles</div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" alt="Highest Mileage">
     </a>
-    <div class="overlay-text">Highest Mileage – <a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a><br>314,474 miles</div>
+    <div class="overlay-text">
+      <span>Highest Mileage</span>
+      <div class="name-line"><a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a> – 314,474 miles</div>
+    </div>
   </div>
 
   <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" class="image-link" target="_blank">
+    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" alt="Funniest Bumper Sticker">
     </a>
-    <div class="overlay-text">Funniest Bumper Sticker – Brit & Cogan</div>
+    <div class="overlay-text">
+      <span>Funniest Bumper Sticker</span>
+      <div class="name-line">Brit & Cogan</div>
+    </div>
   </div>
 </div>
+<div class="fade-right"></div>
 
   </div>
 </body>
