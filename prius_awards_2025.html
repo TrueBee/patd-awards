@@ -42,9 +42,11 @@
       z-index: 10;
       pointer-events: auto;
       user-select: none;
+      display: none;
     }
     #scrollArrowRight {
       right: 10px;
+      display: block;
     }
     #scrollArrowLeft {
       left: 10px;
@@ -96,15 +98,16 @@
 <body>
   <div class="gallery-wrapper">
     <div class="gallery-container" id="gallery">
-      <!-- Cards inserted here -->
+      <!-- Award cards will be inserted here -->
     </div>
     <div class="fade-right"></div>
     <div class="scroll-arrow" id="scrollArrowLeft">◂</div>
     <div class="scroll-arrow" id="scrollArrowRight">▸</div>
   </div>  <script>
     const gallery = document.getElementById('gallery');
+    const leftArrow = document.getElementById('scrollArrowLeft');
+    const rightArrow = document.getElementById('scrollArrowRight');
 
-    // Original HTML for the cards
     const cardsHTML = `
       <div class="award-card">
         <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" target="_blank">
@@ -180,59 +183,48 @@
       </div>
     `;
 
-    gallery.innerHTML = cardsHTML + cardsHTML; // duplicate for infinite illusion
+    gallery.innerHTML = cardsHTML;
 
-    // Enable click and drag
+    let scrollInterval;
+    function startScroll(dir) {
+      stopScroll();
+      scrollInterval = setInterval(() => {
+        gallery.scrollLeft += dir * 3;
+      }, 16);
+    }
+    function stopScroll() {
+      clearInterval(scrollInterval);
+    }
+    rightArrow.addEventListener('mouseenter', () => startScroll(1));
+    rightArrow.addEventListener('mouseleave', stopScroll);
+    leftArrow.addEventListener('mouseenter', () => startScroll(-1));
+    leftArrow.addEventListener('mouseleave', stopScroll);
+
+    // Drag scroll
     let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    gallery.addEventListener('mousedown', (e) => {
+    let startX, scrollLeft;
+    gallery.addEventListener('mousedown', e => {
       isDown = true;
-      startX = e.pageX - gallery.offsetLeft;
+      startX = e.pageX;
       scrollLeft = gallery.scrollLeft;
     });
-    gallery.addEventListener('mouseleave', () => {
-      isDown = false;
-    });
-    gallery.addEventListener('mouseup', () => {
-      isDown = false;
-    });
-    gallery.addEventListener('mousemove', (e) => {
+    gallery.addEventListener('mouseleave', () => isDown = false);
+    gallery.addEventListener('mouseup', () => isDown = false);
+    gallery.addEventListener('mousemove', e => {
       if (!isDown) return;
-      const x = e.pageX - gallery.offsetLeft;
+      e.preventDefault();
+      const x = e.pageX;
       const walk = (x - startX) * 1.5;
       gallery.scrollLeft = scrollLeft - walk;
     });
 
-    // Scroll arrows hover
-    let scrollInterval;
-    document.getElementById('scrollArrowRight').addEventListener('mouseenter', () => {
-      scrollInterval = setInterval(() => {
-        gallery.scrollLeft += 3;
-        loopGallery();
-      }, 16);
-    });
-    document.getElementById('scrollArrowRight').addEventListener('mouseleave', () => {
-      clearInterval(scrollInterval);
-    });
-    document.getElementById('scrollArrowLeft').addEventListener('mouseenter', () => {
-      scrollInterval = setInterval(() => {
-        gallery.scrollLeft -= 3;
-        loopGallery();
-      }, 16);
-    });
-    document.getElementById('scrollArrowLeft').addEventListener('mouseleave', () => {
-      clearInterval(scrollInterval);
-    });
-
-    function loopGallery() {
-      const scrollWidth = gallery.scrollWidth / 2;
-      if (gallery.scrollLeft >= scrollWidth) {
-        gallery.scrollLeft -= scrollWidth;
-      } else if (gallery.scrollLeft <= 0) {
-        gallery.scrollLeft += scrollWidth;
+    // Show left arrow only if scrolled
+    gallery.addEventListener('scroll', () => {
+      if (gallery.scrollLeft > 10) {
+        leftArrow.style.display = 'block';
+      } else {
+        leftArrow.style.display = 'none';
       }
-    }
+    });
   </script></body>
 </html>
