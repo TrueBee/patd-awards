@@ -50,18 +50,18 @@
       left: 10px;
     }
     .gallery-container {
-      overflow-x: auto;
-      white-space: nowrap;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      scroll-behavior: smooth;
       padding: 20px;
-      background-color: transparent;
       scrollbar-width: none;
     }
     .gallery-container::-webkit-scrollbar {
       display: none;
     }
     .award-card {
-      display: inline-block;
-      position: relative;
+      flex: 0 0 auto;
       margin-right: 20px;
       width: 360px;
       height: auto;
@@ -96,6 +96,16 @@
 <body>
   <div class="gallery-wrapper">
     <div class="gallery-container" id="gallery">
+      <!-- Cards inserted here -->
+    </div>
+    <div class="fade-right"></div>
+    <div class="scroll-arrow" id="scrollArrowLeft">◂</div>
+    <div class="scroll-arrow" id="scrollArrowRight">▸</div>
+  </div>  <script>
+    const gallery = document.getElementById('gallery');
+
+    // Original HTML for the cards
+    const cardsHTML = `
       <div class="award-card">
         <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" target="_blank">
           <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" alt="Cool Prius">
@@ -104,89 +114,81 @@
           <span>"Cool" Prius / Best Camping Prius</span>
           <div class="name-line"><a href="https://www.instagram.com/prirunnerryan" target="_blank">@prirunnerryan</a></div>
         </div>
-      </div><div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" alt="Best Street Prius">
-    </a>
-    <div class="overlay-text">
-      <span>Best Street Prius</span>
-      <div class="name-line"><a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
-    </div>
-  </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" alt="Best Street Prius">
+        </a>
+        <div class="overlay-text">
+          <span>Best Street Prius</span>
+          <div class="name-line"><a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" alt="Best Off-Road Prius + Bumper Sticker">
+        </a>
+        <div class="overlay-text">
+          <span>Best Off-Road Prius + Funniest Bumper Sticker</span>
+          <div class="name-line"><a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" alt="Longest Owned">
+        </a>
+        <div class="overlay-text">
+          <span>Longest Owned</span>
+          <div class="name-line"><a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a> – 12 years</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" alt="Farthest Traveled">
+        </a>
+        <div class="overlay-text">
+          <span>Farthest Traveled</span>
+          <div class="name-line"><a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a> – 3,465 miles from California</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" alt="Lowest Mileage">
+        </a>
+        <div class="overlay-text">
+          <span>Lowest Mileage</span>
+          <div class="name-line"><a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a> – 60,000 miles</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" alt="Highest Mileage">
+        </a>
+        <div class="overlay-text">
+          <span>Highest Mileage</span>
+          <div class="name-line"><a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a> – 314,474 miles</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" target="_blank">
+          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" alt="Funniest Bumper Sticker">
+        </a>
+        <div class="overlay-text">
+          <span>Funniest Bumper Sticker</span>
+          <div class="name-line">Brit & Cogan</div>
+        </div>
+      </div>
+    `;
 
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" alt="Best Off-Road Prius + Bumper Sticker">
-    </a>
-    <div class="overlay-text">
-      <span>Best Off-Road Prius + Funniest Bumper Sticker</span>
-      <div class="name-line"><a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
-    </div>
-  </div>
+    gallery.innerHTML = cardsHTML + cardsHTML; // duplicate for infinite illusion
 
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" alt="Longest Owned">
-    </a>
-    <div class="overlay-text">
-      <span>Longest Owned</span>
-      <div class="name-line"><a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a> – 12 years</div>
-    </div>
-  </div>
-
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" alt="Farthest Traveled">
-    </a>
-    <div class="overlay-text">
-      <span>Farthest Traveled</span>
-      <div class="name-line"><a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a> – 3,465 miles from California</div>
-    </div>
-  </div>
-
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" alt="Lowest Mileage">
-    </a>
-    <div class="overlay-text">
-      <span>Lowest Mileage</span>
-      <div class="name-line"><a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a> – 60,000 miles</div>
-    </div>
-  </div>
-
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" alt="Highest Mileage">
-    </a>
-    <div class="overlay-text">
-      <span>Highest Mileage</span>
-      <div class="name-line"><a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a> – 314,474 miles</div>
-    </div>
-  </div>
-
-  <div class="award-card">
-    <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" target="_blank">
-      <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" alt="Funniest Bumper Sticker">
-    </a>
-    <div class="overlay-text">
-      <span>Funniest Bumper Sticker</span>
-      <div class="name-line">Brit & Cogan</div>
-    </div>
-  </div>
-</div>
-<div class="fade-right"></div>
-<div class="scroll-arrow" id="scrollArrowLeft">◂</div>
-<div class="scroll-arrow" id="scrollArrowRight">▸</div>
-
-  </div>  <script>
-    const gallery = document.getElementById('gallery');
+    // Enable click and drag
     let isDown = false;
     let startX;
     let scrollLeft;
 
     gallery.addEventListener('mousedown', (e) => {
       isDown = true;
-      gallery.classList.add('active');
       startX = e.pageX - gallery.offsetLeft;
       scrollLeft = gallery.scrollLeft;
     });
@@ -198,32 +200,39 @@
     });
     gallery.addEventListener('mousemove', (e) => {
       if (!isDown) return;
-      e.preventDefault();
       const x = e.pageX - gallery.offsetLeft;
       const walk = (x - startX) * 1.5;
       gallery.scrollLeft = scrollLeft - walk;
     });
 
+    // Scroll arrows hover
     let scrollInterval;
-    const scrollArrowRight = document.getElementById('scrollArrowRight');
-    const scrollArrowLeft = document.getElementById('scrollArrowLeft');
-
-    scrollArrowRight.addEventListener('mouseenter', () => {
+    document.getElementById('scrollArrowRight').addEventListener('mouseenter', () => {
       scrollInterval = setInterval(() => {
-        gallery.scrollLeft += 5;
+        gallery.scrollLeft += 3;
+        loopGallery();
       }, 16);
     });
-    scrollArrowRight.addEventListener('mouseleave', () => {
+    document.getElementById('scrollArrowRight').addEventListener('mouseleave', () => {
+      clearInterval(scrollInterval);
+    });
+    document.getElementById('scrollArrowLeft').addEventListener('mouseenter', () => {
+      scrollInterval = setInterval(() => {
+        gallery.scrollLeft -= 3;
+        loopGallery();
+      }, 16);
+    });
+    document.getElementById('scrollArrowLeft').addEventListener('mouseleave', () => {
       clearInterval(scrollInterval);
     });
 
-    scrollArrowLeft.addEventListener('mouseenter', () => {
-      scrollInterval = setInterval(() => {
-        gallery.scrollLeft -= 5;
-      }, 16);
-    });
-    scrollArrowLeft.addEventListener('mouseleave', () => {
-      clearInterval(scrollInterval);
-    });
+    function loopGallery() {
+      const scrollWidth = gallery.scrollWidth / 2;
+      if (gallery.scrollLeft >= scrollWidth) {
+        gallery.scrollLeft -= scrollWidth;
+      } else if (gallery.scrollLeft <= 0) {
+        gallery.scrollLeft += scrollWidth;
+      }
+    }
   </script></body>
 </html>
