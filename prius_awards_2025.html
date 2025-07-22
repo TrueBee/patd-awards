@@ -31,15 +31,15 @@
       pointer-events: none;
       z-index: 5;
     }
-    .scroll-arrow {
+    .fade-right::after {
+      content: '▶';
+      color: white;
+      font-size: 22px;
       position: absolute;
-      top: 50%;
       right: 10px;
+      top: 50%;
       transform: translateY(-50%);
-      font-size: 32px;
-      color: rgba(255, 255, 255, 0.7);
-      z-index: 6;
-      pointer-events: none;
+      opacity: 0.7;
     }
     .gallery-container {
       overflow-x: auto;
@@ -48,6 +48,10 @@
       background-color: transparent;
       scrollbar-color: #666 #222;
       scrollbar-width: thin;
+      cursor: grab;
+    }
+    .gallery-container:active {
+      cursor: grabbing;
     }
     .gallery-container::-webkit-scrollbar {
       height: 10px;
@@ -68,22 +72,21 @@
       overflow: hidden;
       box-shadow: 0 0 12px rgba(0,0,0,0.7);
       background-color: #000;
-      vertical-align: top;
     }
     .award-card img {
       width: 100%;
-      height: 240px;
+      height: 250px;
       object-fit: cover;
       display: block;
     }
-    .award-text {
-      padding: 10px 12px;
-      background-color: #111;
+    .overlay-text {
+      padding: 12px;
+      font-size: 16px;
+      background-color: #000;
     }
-    .award-text span {
+    .overlay-text span {
       display: block;
       font-weight: bold;
-      font-size: 16px;
     }
     .name-line {
       font-size: 14px;
@@ -94,20 +97,20 @@
 </head>
 <body>
   <div class="gallery-wrapper">
-    <div class="gallery-container">
+    <div class="gallery-container" id="scrollContainer">
       <div class="award-card">
         <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" target="_blank">
           <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" alt="Cool Prius">
         </a>
-        <div class="award-text">
-          <span>"Cool" Prius + Best Camping Prius</span>
+        <div class="overlay-text">
+          <span>"Cool" Prius / Best Camping Prius</span>
           <div class="name-line"><a href="https://www.instagram.com/prirunnerryan" target="_blank">@prirunnerryan</a></div>
         </div>
       </div><div class="award-card">
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" alt="Best Street Prius">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Best Street Prius</span>
       <div class="name-line"><a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
     </div>
@@ -117,7 +120,7 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" alt="Best Off-Road Prius + Bumper Sticker">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Best Off-Road Prius + Funniest Bumper Sticker</span>
       <div class="name-line"><a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
     </div>
@@ -127,7 +130,7 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" alt="Longest Owned">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Longest Owned</span>
       <div class="name-line"><a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a> – 12 years</div>
     </div>
@@ -137,7 +140,7 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" alt="Farthest Traveled">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Farthest Traveled</span>
       <div class="name-line"><a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a> – 3,465 miles from California</div>
     </div>
@@ -147,7 +150,7 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" alt="Lowest Mileage">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Lowest Mileage</span>
       <div class="name-line"><a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a> – 60,000 miles</div>
     </div>
@@ -157,7 +160,7 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" alt="Highest Mileage">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Highest Mileage</span>
       <div class="name-line"><a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a> – 314,474 miles</div>
     </div>
@@ -167,15 +170,43 @@
     <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" target="_blank">
       <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" alt="Funniest Bumper Sticker">
     </a>
-    <div class="award-text">
+    <div class="overlay-text">
       <span>Funniest Bumper Sticker</span>
       <div class="name-line">Brit & Cogan</div>
     </div>
   </div>
 </div>
 <div class="fade-right"></div>
-<div class="scroll-arrow">▸</div>
 
-  </div>
-</body>
+  </div>  <script>
+    const slider = document.getElementById('scrollContainer');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+      isDown = true;
+      slider.classList.add('active');
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+      slider.classList.remove('active');
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1; //scroll-fast
+      slider.scrollLeft = scrollLeft - walk;
+    });
+  </script></body>
 </html>
