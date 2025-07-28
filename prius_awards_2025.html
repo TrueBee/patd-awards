@@ -63,11 +63,12 @@
     }
 
     #scrollArrowLeft {
-      left: 0;
+      left: 10px;
+      display: none;
     }
 
     #scrollArrowRight {
-      right: 0;
+      right: 10px;
       display: block;
     }
 
@@ -76,7 +77,7 @@
       flex-wrap: nowrap;
       overflow-x: scroll;
       scroll-behavior: smooth;
-      padding: 20px 10px;
+      padding: 20px 0 20px 5px;
       scrollbar-width: none;
     }
 
@@ -169,6 +170,24 @@
   </style>
 </head>
 <body>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const gallery = document.getElementById('gallery');
+    const leftArrow = document.getElementById('scrollArrowLeft');
+    const rightArrow = document.getElementById('scrollArrowRight');
+
+    function updateArrows() {
+      if (gallery.scrollLeft <= 1) {
+        leftArrow.style.display = 'none';
+      } else {
+        leftArrow.style.display = 'block';
+      }
+    }
+
+    gallery.addEventListener('scroll', updateArrows);
+    window.addEventListener('load', updateArrows);
+  });
+</script>
 <!-- The rest of the code remains unchanged -->
 
 <div class="gallery-wrapper">
