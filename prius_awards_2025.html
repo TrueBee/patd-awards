@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>2025 Prius and the Dragon Awards</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
@@ -11,16 +12,20 @@
       color: #fff;
       font-family: 'Roboto', sans-serif;
     }
+
     a {
       color: #ccc;
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
     .gallery-wrapper {
       position: relative;
     }
+
     .fade-right {
       position: absolute;
       top: 0;
@@ -31,26 +36,41 @@
       pointer-events: none;
       z-index: 5;
     }
+
     .scroll-arrow {
+      font-size: 42px;
+      color: #ffffff;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 48px;
-      color: white;
-      opacity: 0.6;
-      cursor: pointer;
       z-index: 10;
-      pointer-events: auto;
+      cursor: pointer;
       user-select: none;
-      display: none;
+      pointer-events: auto;
+      transition: background 0.3s ease;
     }
+
+    .scroll-arrow:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    #scrollArrowLeft {
+      left: 10px;
+    }
+
     #scrollArrowRight {
       right: 10px;
       display: block;
     }
-    #scrollArrowLeft {
-      left: 10px;
-    }
+
     .gallery-container {
       display: flex;
       flex-wrap: nowrap;
@@ -59,172 +79,182 @@
       padding: 20px;
       scrollbar-width: none;
     }
+
     .gallery-container::-webkit-scrollbar {
       display: none;
     }
+
     .award-card {
+      position: relative;
       flex: 0 0 auto;
       margin-right: 20px;
       width: 360px;
-      height: auto;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 0 12px rgba(0,0,0,0.7);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.7);
       background-color: #000;
     }
+
     .award-card img {
       width: 100%;
       height: 250px;
       object-fit: cover;
       display: block;
     }
+
     .overlay-text {
       padding: 10px 12px;
       box-sizing: border-box;
       font-size: 16px;
       background-color: #000;
     }
+
     .overlay-text span {
       display: block;
       font-weight: bold;
     }
+
     .name-line {
       font-size: 14px;
       font-weight: normal;
       margin-top: 4px;
     }
+
+    .sparkle {
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: skewX(-20deg);
+      animation: sparkleMove 3s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes sparkleMove {
+      0% { left: -75%; }
+      100% { left: 125%; }
+    }
+
+    .award-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 40%),
+        radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 50%),
+        radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 60%),
+        radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 50%),
+        radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 50%);
+      background-size: 10px 10px, 12px 12px, 14px 14px, 11px 11px, 13px 13px;
+      background-position:
+        var(--star-pos-1), var(--star-pos-2), var(--star-pos-3),
+        var(--star-pos-4), var(--star-pos-5);
+      background-repeat: no-repeat;
+      animation: twinkle 4s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <div class="gallery-wrapper">
-    <div class="gallery-container" id="gallery">
-      <!-- Award cards will be inserted here -->
+<div class="gallery-wrapper">
+  <div class="gallery-container" id="gallery"></div>
+  <div class="fade-right"></div>
+  <div class="scroll-arrow" id="scrollArrowLeft">&#10094;</div>
+  <div class="scroll-arrow" id="scrollArrowRight">&#10095;</div>
+</div>
+
+<script>
+  const gallery = document.getElementById('gallery');
+  const leftArrow = document.getElementById('scrollArrowLeft');
+  const rightArrow = document.getElementById('scrollArrowRight');
+
+  const winners = [
+    { img: 'dscf2075_orig.jpg', title: '\"Cool\" Prius / Best Camping Prius', name: 'Ryan – @prirunnerryan', url: 'prirunnerryan' },
+    { img: 'dscf2051-1_orig.jpg', title: 'Best Street Prius', name: 'Glenn – @dragonprius', url: 'dragonprius' },
+    { img: 'dscf2546_orig.jpg', title: 'Best Off-Road Prius + Funniest Bumper Sticker', name: 'Eric – @highbrid_life', url: 'highbrid_life' },
+    { img: 'dscf2132_orig.jpg', title: 'Longest Owned', name: 'Daniel – @doctor_prius – 12 years', url: 'doctor_prius' },
+    { img: 'dscf2168_orig.jpg', title: 'Farthest Traveled', name: 'Jay – @gonzoprius – 3,465 miles from California', url: 'gonzoprius' },
+    { img: 'dscf2156_orig.jpg', title: 'Lowest Mileage', name: 'Carey – @seznik0 – 60,000 miles', url: 'seznik0' },
+    { img: 'dscf2058-2_orig.jpg', title: 'Highest Mileage', name: 'Josh – @thatprius – 314,474 miles', url: 'thatprius' },
+    { img: 'dscf2118_orig.jpg', title: 'Funniest Bumper Sticker', name: 'Brit & Cogan', url: '' }
+  ];
+
+  gallery.innerHTML = winners.map(w => `
+    <div class="award-card">
+      <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/${w.img}" target="_blank">
+        <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/${w.img}" alt="${w.title}">
+      </a>
+      <div class="overlay-text">
+        <span>${w.title}</span>
+        <div class="name-line">
+          ${w.url ? `${w.name.split('–')[0]}– <a href="https://www.instagram.com/${w.url}" target="_blank">@${w.url}</a>` : w.name}
+        </div>
+      </div>
+      <div class="sparkle"></div>
     </div>
-    <div class="fade-right"></div>
-    <div class="scroll-arrow" id="scrollArrowLeft">◂</div>
-    <div class="scroll-arrow" id="scrollArrowRight">▸</div>
-  </div>  <script>
-    const gallery = document.getElementById('gallery');
-    const leftArrow = document.getElementById('scrollArrowLeft');
-    const rightArrow = document.getElementById('scrollArrowRight');
+  `).join('');
 
-    const cardsHTML = `
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2075_orig.jpg" alt="Cool Prius">
-        </a>
-        <div class="overlay-text">
-          <span>"Cool" Prius / Best Camping Prius</span>
-          <div class="name-line">Ryan – <a href="https://www.instagram.com/prirunnerryan" target="_blank">@prirunnerryan</a></div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2051-1_orig.jpg" alt="Best Street Prius">
-        </a>
-        <div class="overlay-text">
-          <span>Best Street Prius</span>
-          <div class="name-line">Glenn – <a href="https://www.instagram.com/dragonprius" target="_blank">@dragonprius</a></div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2546_orig.jpg" alt="Best Off-Road Prius + Bumper Sticker">
-        </a>
-        <div class="overlay-text">
-          <span>Best Off-Road Prius + Funniest Bumper Sticker</span>
-          <div class="name-line">Eric – <a href="https://www.instagram.com/highbrid_life" target="_blank">@highbrid_life</a></div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2132_orig.jpg" alt="Longest Owned">
-        </a>
-        <div class="overlay-text">
-          <span>Longest Owned</span>
-          <div class="name-line">Daniel – <a href="https://www.instagram.com/doctor_prius" target="_blank">@doctor_prius</a> – 12 years</div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2168_orig.jpg" alt="Farthest Traveled">
-        </a>
-        <div class="overlay-text">
-          <span>Farthest Traveled</span>
-          <div class="name-line">Jay – <a href="https://www.instagram.com/gonzoprius" target="_blank">@gonzoprius</a> – 3,465 miles from California</div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2156_orig.jpg" alt="Lowest Mileage">
-        </a>
-        <div class="overlay-text">
-          <span>Lowest Mileage</span>
-          <div class="name-line">Carey – <a href="https://www.instagram.com/seznik0" target="_blank">@seznik0</a> – 60,000 miles</div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2058-2_orig.jpg" alt="Highest Mileage">
-        </a>
-        <div class="overlay-text">
-          <span>Highest Mileage</span>
-          <div class="name-line">Josh – <a href="https://www.instagram.com/thatprius" target="_blank">@thatprius</a> – 314,474 miles</div>
-        </div>
-      </div>
-      <div class="award-card">
-        <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" target="_blank">
-          <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/dscf2118_orig.jpg" alt="Funniest Bumper Sticker">
-        </a>
-        <div class="overlay-text">
-          <span>Funniest Bumper Sticker</span>
-          <div class="name-line">Brit & Cogan</div>
-        </div>
-      </div>
-    `;
-
-    gallery.innerHTML = cardsHTML;
-
-    let scrollInterval;
-    function startScroll(dir) {
-      stopScroll();
-      scrollInterval = setInterval(() => {
-        gallery.scrollLeft += dir * 3;
-      }, 16);
+  const cards = document.querySelectorAll('.award-card');
+  cards.forEach(card => {
+    for (let i = 1; i <= 5; i++) {
+      const x = Math.floor(Math.random() * 90 + 5);
+      const y = Math.floor(Math.random() * 90 + 5);
+      card.style.setProperty(`--star-pos-${i}`, `${x}% ${y}%`);
     }
-    function stopScroll() {
-      clearInterval(scrollInterval);
-    }
-    rightArrow.addEventListener('mouseenter', () => startScroll(1));
-    rightArrow.addEventListener('mouseleave', stopScroll);
-    leftArrow.addEventListener('mouseenter', () => startScroll(-1));
-    leftArrow.addEventListener('mouseleave', stopScroll);
+  });
 
-    // Drag scroll
-    let isDown = false;
-    let startX, scrollLeft;
-    gallery.addEventListener('mousedown', e => {
-      isDown = true;
-      startX = e.pageX;
-      scrollLeft = gallery.scrollLeft;
-    });
-    gallery.addEventListener('mouseleave', () => isDown = false);
-    gallery.addEventListener('mouseup', () => isDown = false);
-    gallery.addEventListener('mousemove', e => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX;
-      const walk = (x - startX) * 1.5;
-      gallery.scrollLeft = scrollLeft - walk;
-    });
+  let scrollInterval;
+  function startScroll(dir) {
+    stopScroll();
+    scrollInterval = setInterval(() => {
+      gallery.scrollLeft += dir * 3;
+    }, 16);
+  }
 
-    // Show left arrow only if scrolled
-    gallery.addEventListener('scroll', () => {
-      if (gallery.scrollLeft > 10) {
-        leftArrow.style.display = 'block';
-      } else {
-        leftArrow.style.display = 'none';
-      }
-    });
-  </script></body>
+  function stopScroll() {
+    clearInterval(scrollInterval);
+  }
+
+  rightArrow.addEventListener('mouseenter', () => startScroll(1));
+  rightArrow.addEventListener('mouseleave', stopScroll);
+  leftArrow.addEventListener('mouseenter', () => startScroll(-1));
+  leftArrow.addEventListener('mouseleave', stopScroll);
+
+  // Drag scroll
+  let isDown = false;
+  let startX, scrollLeft;
+  gallery.addEventListener('mousedown', e => {
+    isDown = true;
+    startX = e.pageX;
+    scrollLeft = gallery.scrollLeft;
+  });
+  gallery.addEventListener('mouseleave', () => isDown = false);
+  gallery.addEventListener('mouseup', () => isDown = false);
+  gallery.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX;
+    const walk = (x - startX) * 1.5;
+    gallery.scrollLeft = scrollLeft - walk;
+  });
+
+  gallery.addEventListener('scroll', () => {
+    leftArrow.style.display = gallery.scrollLeft > 10 ? 'block' : 'none';
+  });
+</script>
+
+</body>
 </html>
