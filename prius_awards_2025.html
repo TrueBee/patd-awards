@@ -61,12 +61,12 @@
     }
 
     #scrollArrowLeft {
-      left: 10px;
+      left: -15px;
       display: none;
     }
 
     #scrollArrowRight {
-      right: -30px;
+      right: -15px;
       display: block;
     }
 
@@ -168,24 +168,7 @@
   </style>
 </head>
 <body>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const gallery = document.getElementById('gallery');
-    const leftArrow = document.getElementById('scrollArrowLeft');
-    const rightArrow = document.getElementById('scrollArrowRight');
 
-    function updateArrows() {
-      if (gallery.scrollLeft <= 1) {
-        leftArrow.style.display = 'none';
-      } else {
-        leftArrow.style.display = 'block';
-      }
-    }
-
-    gallery.addEventListener('scroll', updateArrows);
-    window.addEventListener('load', updateArrows);
-  });
-</script>
 <div class="gallery-wrapper">
   <div class="gallery-container" id="gallery"></div>
   <div class="fade-right"></div>
@@ -257,7 +240,14 @@
     }
   ];
 
-   gallery.innerHTML = winners.map(w => `
+  function updateArrows() {
+    leftArrow.style.display = gallery.scrollLeft <= 5 ? 'none' : 'block';
+  }
+
+  window.addEventListener('load', updateArrows);
+  gallery.addEventListener('scroll', updateArrows);
+
+  gallery.innerHTML = winners.map(w => `
     <div class="award-card">
       <a href="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/${w.img}" target="_blank">
         <img src="https://www.priusandthedragon.org/uploads/1/1/8/5/11858277/${w.img}" alt="${w.title}">
@@ -281,42 +271,14 @@
     }
   });
 
-  let scrollInterval;
-  function startScroll(dir) {
-  stopScroll();
-  scrollInterval = setInterval(() => {
-    gallery.scrollLeft += dir * 40; // Increase for faster scroll
-  }, 16); // ~60fps for smoother motion
-}
-
-  function stopScroll() {
-    clearInterval(scrollInterval);
-  }
-
-  rightArrow.addEventListener('mouseenter', () => startScroll(1));
-  rightArrow.addEventListener('mouseleave', stopScroll);
-  leftArrow.addEventListener('mouseenter', () => startScroll(-1));
-  leftArrow.addEventListener('mouseleave', stopScroll);
-
-  let isDown = false;
-  let startX, scrollLeft;
-  gallery.addEventListener('mousedown', e => {
-    isDown = true;
-    startX = e.pageX;
-    scrollLeft = gallery.scrollLeft;
-  });
-  gallery.addEventListener('mouseleave', () => isDown = false);
-  gallery.addEventListener('mouseup', () => isDown = false);
-  gallery.addEventListener('mousemove', e => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX;
-    const walk = (x - startX) * 1.5;
-    gallery.scrollLeft = scrollLeft - walk;
+  rightArrow.addEventListener('click', () => {
+    const cardWidth = document.querySelector('.award-card').offsetWidth + 20;
+    gallery.scrollLeft += cardWidth;
   });
 
-  gallery.addEventListener('scroll', () => {
-    leftArrow.style.display = gallery.scrollLeft > 10 ? 'block' : 'none';
+  leftArrow.addEventListener('click', () => {
+    const cardWidth = document.querySelector('.award-card').offsetWidth + 20;
+    gallery.scrollLeft -= cardWidth;
   });
 </script>
 
